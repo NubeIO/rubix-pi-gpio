@@ -20,7 +20,7 @@ class BaseSetting(ABC):
 
 
 class AppSetting:
-    PORT = 2020
+    PORT = 2001
     FLASK_KEY: str = 'APP_SETTING'
     GLOBAL_DIR_ENV = 'RUBIX_LORA_GLOBAL'
     DATA_DIR_ENV = 'RUBIX_LORA_DATA'
