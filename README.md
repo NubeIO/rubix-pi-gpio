@@ -1,4 +1,20 @@
-# Rubix Date Push
+# Rubix Pi GPIO App
+
+
+## Rubix Compute GPIO
+
+## STM 32 reset
+```
+import RPi.GPIO as GPIO
+from time import sleep
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(12, GPIO.OUT)
+GPIO.output(12, GPIO.LOW)
+sleep(2)
+GPIO.output(12, GPIO.HIGH)
+GPIO.cleanup()
+
+```
 
 ## Running in development
 
@@ -19,10 +35,10 @@
 - Build local binary
 
     ```bash
-    poetry run pyinstaller run.py -n rubix-data-push --clean --onefile --add-data pyproject.toml:. --add-data config:config
+    poetry run pyinstaller run.py -n rubix-pi-gpio --clean --onefile --add-data pyproject.toml:. --add-data config:config
     ```
 
-  The output is: `dist/rubix-data-push`
+  The output is: `dist/rubix-pi-gpio`
 
 ## Docker build
 
@@ -32,13 +48,13 @@
 ./docker.sh
 ```
 
-The output image is: `rubix-data-push:dev`
+The output image is: `rubix-pi-gpio:dev`
 
 ### Run
 
 ```bash
-docker volume create rubix-data-push
-docker run --rm -it -p 2020:2020 -v rubix-data-push-data:/data --name rubix-data-push rubix-data-push:dev
+docker volume create rubix-pi-gpio
+docker run --rm -it -p 2001:2001 -v rubix-pi-gpio-data:/data --name rubix-pi-gpio rubix-pi-gpio:dev
 ```
 
 ## Deploy on Production
@@ -47,17 +63,17 @@ docker run --rm -it -p 2020:2020 -v rubix-data-push-data:/data --name rubix-data
 - Review help and start
 
 ```bash
-$ rubix-data-push -h
-Usage: rubix-data-push [OPTIONS]
+$ rubix-pi-gpio -h
+Usage: rubix-pi-gpio [OPTIONS]
 
 Options:
-  -p, --port INTEGER              Port  [default: 2020]
+  -p, --port INTEGER              Port  [default: 2001]
   -g, --global-dir PATH           Global dir
   -d, --data-dir PATH             Application data dir
   -c, --conf-dir PATH             Application config dir
   --prod                          Production mode
-  -s, --setting-file TEXT         rubix-data-push: setting ini file
-  -l, --logging-conf TEXT         rubix-data-push: logging config file
+  -s, --setting-file TEXT         rubix-pi-gpio: setting ini file
+  -l, --logging-conf TEXT         rubix-pi-gpio: logging config file
   --workers INTEGER               Gunicorn: The number of worker processes for handling requests.
   --gunicorn-config TEXT          Gunicorn: config file(gunicorn.conf.py)
   --log-level [FATAL|ERROR|WARN|INFO|DEBUG]
