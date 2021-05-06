@@ -16,7 +16,7 @@ on:
 env:
   APP_NAME: rubix-pi-gpio
   GHCR_IMAGE: ghcr.io/nubeio/rubix-pi-gpio
-  PLATFORMS: linux/amd64,linux/arm/v7
+  PLATFORMS: linux/arm/v7
 
 jobs:
 
