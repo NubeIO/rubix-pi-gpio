@@ -127,16 +127,9 @@ jobs:
           image=localhost:5000/${{ env.APP_NAME }}:${{ needs.context.outputs.sha }}
           output=/usr/src/app/
           mkdir -p /tmp/zip /tmp/images
-          IFS=',' read -ra ARR <<< "${{ env.PLATFORMS }}"
-          for plat in "${ARR[@]}"; do
-            p=$(echo "${plat//\//}")
-            p=$(echo "${p//linux/}")
-            perImage=$(docker buildx imagetools inspect $image | grep -B 2 $plat | grep Name: | awk '{print $2}')
-            artifact=${{ needs.context.outputs.fqn }}.$p
-            folder=/tmp/images/$artifact
-            docker create --name $artifact $perImage && docker cp $artifact:$output $folder && docker rm $artifact
-            cd $folder; zip -r /tmp/zip/$artifact.zip ./; cd -
-          done
+          artifact=${{ needs.context.outputs.fqn }}
+          docker create --name $artifact $image && docker cp $artifact:$output /tmp/images && docker rm $artifact
+          cd /tmp/images; zip -r /tmp/zip/$artifact.zip ./; cd -
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
