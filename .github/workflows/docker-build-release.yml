@@ -129,7 +129,7 @@ jobs:
           mkdir -p /tmp/zip /tmp/images
           artifact=${{ needs.context.outputs.fqn }}
           docker create --name $artifact $image && docker cp $artifact:$output /tmp/images && docker rm $artifact
-          cd /tmp/images; zip -r /tmp/zip/$artifact.zip ./; cd -
+          cd /tmp/images; zip -r /tmp/zip/$artifact-armv7.zip ./; cd -
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -172,4 +172,4 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            /tmp/zip/${{ needs.context.outputs.fqn }}.*.zip
+            /tmp/zip/${{ needs.context.outputs.fqn }}-armv7.zip
